@@ -6,10 +6,11 @@
     <title>The Oxford by CEFR level</title>
     <style>
         body {
-            font-family: 'Inter', sans-serif; /* Using Inter font */
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f2f5;
+            /* Enhanced background gradient */
+            background: radial-gradient(circle at top left, #e0f2f7, #f0f2f5, #f7e0f2);
             color: #333;
             display: flex;
             flex-direction: column;
@@ -23,6 +24,7 @@
             margin-bottom: 30px;
             font-size: 2.5em;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Added text shadow */
         }
 
         /* Homepage Styles */
@@ -39,37 +41,38 @@
         .level-button {
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 18px; /* Slightly more rounded */
             padding: 30px 40px;
             font-size: 2em;
             font-weight: bold;
             cursor: pointer;
-            flex: 1 1 calc(50% - 25px); /* Two columns on larger screens */
+            flex: 1 1 calc(50% - 25px);
             max-width: 400px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow */
             transition: all 0.3s ease;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Text shadow for buttons */
         }
 
         .level-button span {
             font-size: 0.7em;
             margin-top: 5px;
-            opacity: 0.8;
+            opacity: 0.9; /* Slightly less transparent */
         }
 
-        /* Gradient Colors for Buttons */
-        .level-button[data-level="a1"] { background-image: linear-gradient(to right, #e74c3c, #c0392b); } /* Red */
-        .level-button[data-level="a2"] { background-image: linear-gradient(to right, #f1c40f, #f39c12); } /* Yellow */
-        .level-button[data-level="b1"] { background-image: linear-gradient(to right, #3498db, #2980b9); } /* Blue */
-        .level-button[data-level="b2"] { background-image: linear-gradient(to right, #2ecc71, #27ae60); } /* Green */
+        /* Richer Gradient Colors for Buttons */
+        .level-button[data-level="a1"] { background-image: linear-gradient(to right, #d62c2c, #a92222); } /* Deeper Red */
+        .level-button[data-level="a2"] { background-image: linear-gradient(to right, #e6b800, #b38f00); } /* Richer Yellow */
+        .level-button[data-level="b1"] { background-image: linear-gradient(to right, #207bc2, #185e92); } /* Deeper Blue */
+        .level-button[data-level="b2"] { background-image: linear-gradient(to right, #22a05d, #1b7a48); } /* Deeper Green */
 
         .level-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px); /* More pronounced lift */
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4); /* Even stronger shadow */
         }
 
         .level-button:active {
@@ -79,60 +82,62 @@
 
         /* Flashcard View Styles */
         #flashcard-view {
-            display: none; /* Hidden by default */
+            display: none;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 25px; /* Increased gap */
             width: 100%;
-            max-width: 600px;
+            max-width: 650px; /* Slightly wider */
             margin-top: 30px;
         }
 
         #timer-display {
-            font-size: 2.5em; /* Bigger font size for timer */
+            font-size: 2.8em; /* Even bigger font size for timer */
             font-weight: bold;
-            color: #d9534f; /* Red for timer */
-            margin-bottom: 15px;
+            color: #c0392b; /* Stronger red for timer */
+            margin-bottom: 20px;
             background-color: #fff;
-            padding: 10px 25px; /* Slightly more padding */
-            border-radius: 12px; /* More rounded */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow */
-            min-width: 120px; /* Wider */
+            padding: 12px 30px; /* More padding */
+            border-radius: 15px; /* More rounded */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            min-width: 140px; /* Wider */
             text-align: center;
-            border: 2px solid #d9534f; /* Border for timer */
+            border: 3px solid #e74c3c; /* Thicker border for timer */
+            transition: all 0.3s ease; /* Smooth transition for color change */
         }
 
         #flashcard-container {
-            border-radius: 25px; /* More rounded corners */
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
-            padding: 50px 40px; /* Increased padding */
+            border-radius: 30px; /* Even more rounded corners */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); /* Much more pronounced shadow */
+            padding: 55px 45px; /* Increased padding */
             width: 100%;
-            min-height: 250px; /* Increased min height */
-            height: auto; /* Allow height to adjust to content */
+            min-height: 280px; /* Increased min height */
+            height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             position: relative;
-            border: 1px solid #dee2e6; /* Light border */
-            transition: background-color 0.3s ease; /* Smooth transition for background */
+            border: 2px solid #ced4da; /* Slightly more visible border */
+            transition: background-color 0.4s ease, transform 0.3s ease; /* Smooth transition for background and transform */
+            transform: scale(1); /* Initial scale for potential animation */
         }
 
-        /* Flashcard background colors based on level */
-        #flashcard-container.level-a1-bg { background-color: #ffe0e0; } /* Light Red */
-        #flashcard-container.level-a2-bg { background-color: #fffacd; } /* Light Yellow */
-        #flashcard-container.level-b1-bg { background-color: #e0f2f7; } /* Light Blue */
-        #flashcard-container.level-b2-bg { background-color: #e0ffe0; } /* Light Green */
+        /* Flashcard background colours based on level */
+        #flashcard-container.level-a1-bg { background-color: #ffebeb; } /* Lighter Red */
+        #flashcard-container.level-a2-bg { background-color: #fffaf0; } /* Lighter Yellow */
+        #flashcard-container.level-b1-bg { background-color: #ebf7fa; } /* Lighter Blue */
+        #flashcard-container.level-b2-bg { background-color: #ebfef0; } /* Lighter Green */
 
 
         /* All content now directly inside flashcard-container */
         #current-word-display {
-            font-size: 3em; /* Adjusted font size */
-            font-weight: 900; /* Bolder */
-            color: #1a2a3a; /* Darker, richer color */
-            margin-bottom: 15px;
-            word-break: break-word; /* Handle long words */
+            font-size: 2.8em; /* Adjusted font size */
+            font-weight: 900;
+            color: #1a2a3a;
+            margin-bottom: 18px; /* More space */
+            word-break: break-word;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,118 +145,119 @@
         }
 
         #word-type {
-            font-size: 1.8em; /* Bigger font size */
-            color: #556677; /* Softer color */
+            font-size: 1.6em; /* Adjusted font size */
+            color: #556677;
             margin-top: 10px;
-            margin-bottom: 25px; /* More space */
-            font-style: italic; /* Italicize type */
+            margin-bottom: 30px; /* More space */
+            font-style: italic;
         }
 
         .ai-content-line {
             display: flex;
-            align-items: flex-start; /* Align items to start for multi-line text */
+            align-items: flex-start;
             width: 100%;
-            margin-bottom: 15px; /* More space between lines */
-            text-align: left; /* Ensure text aligns left */
-            line-height: 1.6; /* Improved line height */
+            margin-bottom: 18px; /* More space between lines */
+            text-align: left;
+            line-height: 1.7; /* Improved line height */
         }
 
         .ai-content-line span {
-            flex-grow: 1; /* Allow text to take up available space */
+            flex-grow: 1;
         }
 
         #word-meaning, #word-sentence {
-            font-size: 1.3em; /* Bigger font size */
-            color: #3f5161; /* Slightly lighter than word color */
+            font-size: 1.25em; /* Adjusted font size */
+            color: #3f5161;
             line-height: 1.6;
         }
         #word-meaning strong, #word-sentence strong {
-            color: #007bff; /* Brighter blue for labels */
-            margin-right: 8px; /* More space between label and content */
-            flex-shrink: 0; /* Prevent label from shrinking */
+            color: #007bff;
+            margin-right: 10px; /* More space */
+            flex-shrink: 0;
             font-weight: bold;
         }
 
         .loading-indicator {
-            font-size: 1.4em; /* Bigger loading indicator */
+            font-size: 1.5em; /* Bigger loading indicator */
             color: #999;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
-        #pronunciation-icon-main { /* For word on single view */
+        #pronunciation-icon-main {
             cursor: pointer;
-            color: #007bff; /* Blue for icons */
-            font-size: 2.5em; /* Adjusted icon size */
-            margin-left: 20px; /* More space from word */
-            transition: transform 0.2s;
+            color: #007bff;
+            font-size: 2.2em; /* Adjusted icon size */
+            margin-left: 25px; /* More space from word */
+            transition: transform 0.2s ease-in-out;
         }
 
         #pronunciation-icon-main:hover {
-            transform: scale(1.15); /* More pronounced hover effect */
+            transform: scale(1.2); /* More pronounced hover effect */
         }
 
-        .pronunciation-icon-small { /* For meaning, sentence */
+        .pronunciation-icon-small {
             cursor: pointer;
-            color: #007bff; /* Blue for icons */
-            font-size: 1.8em; /* Bigger icon */
-            margin-left: 15px; /* More space from text */
-            transition: transform 0.2s;
-            flex-shrink: 0; /* Prevent icon from shrinking */
+            color: #007bff;
+            font-size: 1.6em; /* Adjusted icon size */
+            margin-left: 18px; /* More space from text */
+            transition: transform 0.2s ease-in-out;
+            flex-shrink: 0;
         }
 
         .pronunciation-icon-small:hover {
-            transform: scale(1.15);
+            transform: scale(1.2);
         }
 
         .flashcard-buttons {
             display: flex;
-            gap: 20px; /* Increased gap */
-            margin-top: 30px; /* More margin */
+            gap: 25px; /* Increased gap */
+            margin-top: 35px; /* More margin */
             width: 100%;
             justify-content: center;
-            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            flex-wrap: wrap;
         }
 
         .flashcard-buttons button, #back-to-home {
-            background-color: #28a745; /* Green for Next */
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 12px; /* More rounded */
-            padding: 18px 35px; /* Increased padding */
-            font-size: 1.3em; /* Bigger font */
+            border-radius: 15px; /* More rounded */
+            padding: 20px 40px; /* Increased padding */
+            font-size: 1.4em; /* Bigger font */
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow */
-            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
         }
 
         .flashcard-buttons button:hover, #back-to-home:hover {
             background-color: #218838;
-            transform: translateY(-3px); /* More pronounced hover effect */
+            transform: translateY(-4px); /* More pronounced lift */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .flashcard-buttons button:active, #back-to-home:active {
             transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
 
         #refresh-ai-button {
-            background-color: #007bff; /* Blue for Refresh */
+            background-color: #007bff;
         }
         #refresh-ai-button:hover {
             background-color: #0056b3;
         }
 
         #start-timer-button {
-            background-color: #6c757d; /* Gray for Start Timer */
+            background-color: #6c757d;
         }
         #start-timer-button:hover {
             background-color: #5a6268;
         }
 
         #back-to-home {
-            background-color: #6c757d; /* Gray for Back to Home */
-            margin-top: 40px; /* More margin */
+            background-color: #6c757d;
+            margin-top: 45px; /* More margin */
         }
         #back-to-home:hover {
             background-color: #5a6268;
@@ -265,25 +271,26 @@
             transform: translate(-50%, -50%);
             background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 10px; /* Slightly more rounded */
+            padding: 25px; /* More padding */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Stronger shadow */
             z-index: 1000;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            max-width: 80%;
+            gap: 20px; /* More gap */
+            max-width: 85%; /* Wider */
             text-align: center;
+            font-size: 1.1em; /* Slightly larger font */
         }
         #customMessageBox button {
             background-color: #0056b3;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px; /* More padding */
+            border-radius: 8px; /* More rounded */
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em; /* Slightly larger font */
             transition: background-color 0.2s;
         }
         #customMessageBox button:hover {
@@ -296,21 +303,26 @@
                 font-size: 2em;
             }
             .level-button {
-                flex: 1 1 100%; /* Single column on small screens */
+                flex: 1 1 100%;
                 padding: 20px 30px;
                 font-size: 1.5em;
             }
             #current-word-display {
-                font-size: 2.5em; /* Adjusted for mobile */
+                font-size: 2.2em; /* Adjusted for mobile */
             }
             #word-type {
-                font-size: 1.4em; /* Adjusted for mobile */
+                font-size: 1.2em; /* Adjusted for mobile */
             }
             #word-meaning, #word-sentence {
-                font-size: 1.1em; /* Adjusted for mobile */
+                font-size: 1em; /* Adjusted for mobile */
             }
-            #pronunciation-icon-main, .pronunciation-icon-small {
+            #pronunciation-icon-main {
                 font-size: 2em; /* Adjusted for mobile */
+                margin-left: 15px;
+            }
+            .pronunciation-icon-small {
+                font-size: 1.4em; /* Adjusted for mobile */
+                margin-left: 10px;
             }
             .flashcard-buttons button {
                 padding: 15px 25px;
@@ -3743,6 +3755,7 @@
                 playSound(440, 0.1, 'sine', 0.3); // Play a tick sound
             } else if (timeLeft === 0) {
                 timerDisplay.style.color = '#d9534f'; /* Keep red if time's up */
+                console.log("Time's up! Playing sound."); // Debugging: Check if this logs
                 playSound(880, 0.3, 'sine', 0.5); // Play a distinct beep sound
                 showCustomMessageBox("Time's up! Click 'Next Word' to continue.");
                 stopTimer();
