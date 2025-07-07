@@ -3693,7 +3693,7 @@
                 let chatHistoryMeaning = [];
                 chatHistoryMeaning.push({ role: "user", parts: [{ text: `Provide a simple, concise dictionary definition for the English word "${word}" suitable for a 7-12 year old. Use clear, easy-to-understand language, like in a children's dictionary. Only provide the definition, no extra text.` }] });
                 const payloadMeaning = { contents: chatHistoryMeaning };
-                const apiKey = ""; // Canvas will provide this
+                const apiKey = "AIzaSyAOEDAX_YUrTPgsWnbXUar3VGcz4LqHCGk"; // Canvas will provide this
                 const apiUrlMeaning = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const responseMeaning = await fetch(apiUrlMeaning, {
                     method: 'POST',
