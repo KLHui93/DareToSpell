@@ -3689,9 +3689,9 @@
         // Function to fetch meaning and sentence using Gemini API
         async function fetchMeaningAndSentence(word) {
             try {
-                // Fetch Meaning suitable for 7-12 year olds
+                // Fetch Meaning suitable for 7-12 year olds in UK English
                 let chatHistoryMeaning = [];
-                chatHistoryMeaning.push({ role: "user", parts: [{ text: `Provide a simple, concise dictionary definition for the English word "${word}" suitable for a 7-12 year old. Use clear, easy-to-understand language, like in a children's dictionary. Only provide the definition, no extra text.` }] });
+                chatHistoryMeaning.push({ role: "user", parts: [{ text: `Provide a simple, concise dictionary definition for the English word "${word}" in UK English, suitable for a 7-12 year old. Use clear, easy-to-understand language, like in a children's dictionary. Only provide the definition, no extra text.` }] });
                 const payloadMeaning = { contents: chatHistoryMeaning };
                 const apiKey = "AIzaSyAOEDAX_YUrTPgsWnbXUar3VGcz4LqHCGk"; // Canvas will provide this
                 const apiUrlMeaning = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
@@ -3709,9 +3709,9 @@
                 }
                 wordMeaningSpan.innerHTML = `<strong>Meaning:</strong> ${meaning}`;
 
-                // Fetch Sentence suitable for 7-12 year olds
+                // Fetch Sentence suitable for 7-12 year olds in UK English
                 let chatHistorySentence = [];
-                chatHistorySentence.push({ role: "user", parts: [{ text: `Create one simple example sentence using the English word "${word}" that a 7-12 year old would easily understand. The sentence should be clear and straightforward. Only provide the sentence, no extra text.` }] });
+                chatHistorySentence.push({ role: "user", parts: [{ text: `Create one simple example sentence using the English word "${word}" in UK English that a 7-12 year old would easily understand. The sentence should be clear and straightforward. Only provide the sentence, no extra text.` }] });
                 const payloadSentence = { contents: chatHistorySentence };
                 const apiUrlSentence = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const responseSentence = await fetch(apiUrlSentence, {
