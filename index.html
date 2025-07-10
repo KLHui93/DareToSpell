@@ -241,7 +241,7 @@
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
 
-        #refresh-ai-button {
+        #refresh-ai-button { /* Now "Show Details / Refresh AI" */
             background-color: #007bff;
         }
         #refresh-ai-button:hover {
@@ -353,18 +353,18 @@
                 <span id="word-type"></span>
             </div>
             <div class="ai-content-line">
-                <span id="word-meaning"></span>
+                <span id="word-meaning">Click 'Show Details' to reveal.</span>
                 <span class="pronunciation-icon-small" data-target="meaning">🔊</span>
             </div>
             <div class="ai-content-line">
-                <span id="word-sentence"></span>
+                <span id="word-sentence">Click 'Show Details' to reveal.</span>
                 <span class="pronunciation-icon-small" data-target="sentence">🔊</span>
             </div>
         </div>
         <div class="flashcard-buttons">
             <button id="start-timer-button">Start Timer</button>
             <button id="next-word-button">Next Word</button>
-            <button id="refresh-ai-button">Refresh AI</button>
+            <button id="refresh-ai-button">Show Details / Refresh AI</button>
         </div>
         <button id="back-to-home">Back to Homepage</button>
     </div>
@@ -3591,7 +3591,7 @@
         const wordSentenceSpan = document.getElementById('word-sentence');
         const startTimerButton = document.getElementById('start-timer-button'); // Start timer button
         const nextWordButton = document.getElementById('next-word-button');
-        const refreshAiButton = document.getElementById('refresh-ai-button'); // Refresh AI button
+        const refreshAiButton = document.getElementById('refresh-ai-button'); // Now "Show Details / Refresh AI" button
         const backToHomeButton = document.getElementById('back-to-home');
         const flashcardContainer = document.getElementById('flashcard-container');
 
@@ -3686,26 +3686,36 @@
             flashcardContainer.classList.remove('level-a1-bg', 'level-a2-bg', 'level-b1-bg', 'level-b2-bg');
             flashcardContainer.classList.add(`level-${currentLevel}-bg`);
 
-            // Clear previous AI content and show loading indicators
-            wordMeaningSpan.innerHTML = '<span class="loading-indicator">Loading meaning...</span>';
-            wordSentenceSpan.innerHTML = '<span class="loading-indicator">Loading sentence...</span>';
+            // Set initial messages for meaning and sentence
+            wordMeaningSpan.innerHTML = `<strong>Meaning:</strong> Click 'Show Details' to reveal.`;
+            wordSentenceSpan.innerHTML = `<strong>Example:</strong> Click 'Show Details' to reveal.`;
+
+            // Enable the "Show Details / Refresh AI" button
+            refreshAiButton.disabled = false;
 
             // Reset and stop timer for new card
             resetTimer();
             startTimerButton.disabled = false; // Enable start timer button
 
-            // Fetch AI content immediately when the card is displayed
-            await fetchMeaningAndSentence(wordData.word);
+            // *** IMPORTANT: Removed the direct call to fetchMeaningAndSentence here ***
+            // await fetchMeaningAndSentence(wordData.word);
         }
 
         // Function to fetch meaning and sentence using Gemini API
         async function fetchMeaningAndSentence(word) {
+            // Disable the button to prevent multiple clicks while fetching
+            refreshAiButton.disabled = true;
+
             try {
+                // Show loading indicators
+                wordMeaningSpan.innerHTML = '<span class="loading-indicator">Loading meaning...</span>';
+                wordSentenceSpan.innerHTML = '<span class="loading-indicator">Loading sentence...</span>';
+
                 // Fetch Meaning suitable for 7-12 year olds in UK English
                 let chatHistoryMeaning = [];
                 chatHistoryMeaning.push({ role: "user", parts: [{ text: `Provide a simple, concise dictionary definition for the English word "${word}" in UK English, suitable for a 7-12 year old. Use clear, easy-to-understand language, like in a children's dictionary. Only provide the definition, no extra text.` }] });
                 const payloadMeaning = { contents: chatHistoryMeaning };
-                const apiKey = "AIzaSyCNhMzys-yQlQ8kWJ31Hch-XKOWXNxI61o"; // Canvas will provide this
+                const apiKey = ""; // Canvas will provide this
                 const apiUrlMeaning = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const responseMeaning = await fetch(apiUrlMeaning, {
                     method: 'POST',
@@ -3744,6 +3754,9 @@
                 console.error("Error fetching AI content:", error);
                 wordMeaningSpan.innerHTML = `<strong>Meaning:</strong> Failed to load.`;
                 wordSentenceSpan.innerHTML = `<strong>Example:</strong> Failed to load.`;
+            } finally {
+                // The button remains disabled until a new word is displayed
+                // This prevents re-fetching for the same word unless explicitly navigating
             }
         }
 
@@ -3864,13 +3877,9 @@
             displayFlashcard();
         });
 
-        // Refresh AI button
+        // Show Details / Refresh AI button
         refreshAiButton.addEventListener('click', () => {
             if (currentLevelWords[currentWordIndex]) {
-                // Clear previous AI content and show loading indicators
-                wordMeaningSpan.innerHTML = '<span class="loading-indicator">Loading meaning...</span>';
-                wordSentenceSpan.innerHTML = '<span class="loading-indicator">Loading sentence...</span>';
-                // Re-fetch for the current word
                 fetchMeaningAndSentence(currentLevelWords[currentWordIndex].word);
             }
         });
@@ -3894,7 +3903,7 @@
                     // Get only the text content, excluding the "Example:" strong tag
                     textToSpeak = wordSentenceSpan.textContent.replace('Example:', '').trim();
                 }
-                if (textToSpeak) {
+                if (textToSpeak && !textToSpeak.includes("Click 'Show Details'")) { // Only speak if content is loaded
                     speakText(textToSpeak);
                 }
             }
